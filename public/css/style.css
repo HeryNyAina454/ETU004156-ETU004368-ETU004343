@@ -1,0 +1,169 @@
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary: #64748b;
+    --surface: rgba(255, 255, 255, 0.9); /* Un peu plus opaque pour la lisibilité */
+    --text: #1e293b;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background-image: url('../images/back.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem 5%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* --- LE CONTENEUR MAIN (ENCADRÉ ORANGE) --- */
+main {
+    flex: 0 1 auto; /* Ne force plus l'étirement vers le bas */
+    width: fit-content; /* S'adapte exactement à la largeur du contenu */
+    min-width: 40%; /* Taille minimale pour garder un bel aspect */
+    max-width: 80%; 
+    margin: 2rem auto; /* Centre le bloc sur la page */
+    padding: 1.5rem; /* Espace interne réduit comme sur ta photo */
+    background: var(--surface);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+h2 {
+    margin-bottom: 1rem;
+    color: var(--primary);
+    font-size: 1.3rem;
+    border-left: 5px solid var(--primary);
+    padding-left: 0.8rem;
+}
+
+/* --- LE TABLEAU --- */
+table {
+    width: 100%; 
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.85rem;
+}
+
+th {
+    background: var(--primary);
+    color: white;
+    padding: 0.8rem;
+    text-align: left;
+}
+
+td {
+    padding: 0.7rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+/* --- FOOTER FIXÉ TOUT EN BAS --- */
+footer {
+    margin-top: auto; /* Pousse le footer tout en bas de la page */
+    padding: 1.5rem;
+    background: rgba(15, 23, 42, 0.95);
+    color: white;
+    text-align: center;
+}
+
+.signatures ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 0.8rem;
+}
+
+.signatures li {
+    font-family: monospace;
+    background: rgba(255,255,255,0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* Formulaires denses pour les autres pages */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    min-width: 350px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+input, select {
+    padding: 0.6rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+button {
+    background: var(--primary);
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+/* Ajoute ceci à ton fichier style.css existant */
+
+.form-group-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.form-group-row > div {
+    flex: 1;
+}
+
+/* Style spécifique pour les unités dans le tableau du Dashboard */
+.unit-badge {
+    font-size: 0.75rem;
+    color: var(--secondary);
+    font-style: italic;
+    margin-left: 4px;
+}
