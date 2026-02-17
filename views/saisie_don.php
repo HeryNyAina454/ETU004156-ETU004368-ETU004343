@@ -37,7 +37,22 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label>Ordre de distribution :</label>
+            <select name="type_distribution" required>
+                <option value="prioritaire">Ordre Prioritaire (FIFO)</option>
+                <option value="decroissant">Ordre Décroissant (Plus petite demande)</option>
+                <option value="proportionnel">Ordre Proportionnel</option>
+            </select>
+        </div>
+
         <button type="submit">Valider et Distribuer</button>
+    </form>
+
+    <hr style="margin: 30px 0;">
+
+    <form action="index.php?action=reinitialiser" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir tout réinitialiser ?');">
+        <button type="submit" style="background-color: #dc3545;">Réinitialiser le système</button>
     </form>
 </main>
 
