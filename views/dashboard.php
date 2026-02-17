@@ -28,6 +28,13 @@
                     <?php echo ($d['quantite_restante'] <= 0) ? '✅ Comblé' : '⏳ En attente'; ?>
                 <?php endif; ?>
             </td>
+            <td>
+                <a href="index.php?action=delete-besoin&id=<?= $d['id_besoin'] ?>" 
+                   onclick="return confirm('Supprimer ce besoin définitivement ?')" 
+                   style="text-decoration: none;">
+                   🗑️
+                </a>
+            </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
