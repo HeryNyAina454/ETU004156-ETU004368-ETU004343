@@ -10,7 +10,11 @@ class Don {
     public function saveAndDispatch($id_categorie, $article, $quantite, $unite, $type_distribution) {
         try {
             $this->conn->beginTransaction();
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> edf8ef3d9cb4c152e0196c115b7c9332b89c48cf
             $query = "INSERT INTO " . $this->table . " (id_categorie, article, quantite_donnee, quantite_disponible, unite, type_distribution) 
                       VALUES (:id_c, :art, :q_d, :q_disp, :u, :t_d)";
             $stmt = $this->conn->prepare($query);
@@ -25,7 +29,11 @@ class Don {
             $id_don = $this->conn->lastInsertId();
 
             if ($id_categorie != 3) {
+<<<<<<< HEAD
                 $this->dispatch($id_don, trim($article), (float)$quantite, $type_distribution);
+=======
+                $this->dispatch($id_don, trim($article), $quantite, $type_distribution);
+>>>>>>> edf8ef3d9cb4c152e0196c115b7c9332b89c48cf
             }
 
             $this->conn->commit();
@@ -95,6 +103,7 @@ class Don {
         } else {
             foreach ($besoins as $b) {
                 if ($quantite_dispo <= 0) break;
+<<<<<<< HEAD
                 $p = min($quantite_dispo, (float)$b['quantite_restante']);
                 if ($p > 0) {
                     $this->appliquerPrelevement($b['id_besoin'], $id_don, $p);
@@ -118,5 +127,23 @@ class Don {
         $sql2 = "UPDATE bngrc_besoins SET quantite_restante = ROUND(quantite_restante - :q, 2) WHERE id_besoin = :id";
         $stmt2 = $this->conn->prepare($sql2);
         $stmt2->execute([':q' => $quantite, ':id' => $id_besoin]);
+=======
+                $prelevement = min($quantite_dispo, $b['quantite_restante']);
+                $this->appliquerPrelevement($b['id_besoin'], $id_don, $prelevement);
+                $quantite_dispo -= $prelevement;
+            }
+        }
+
+        $sqlUpDon = "UPDATE " . $this->table . " SET quantite_disponible = :q WHERE id_don = :id";
+        $this->conn->prepare($sqlUpDon)->execute([':q' => $quantite_dispo, ':id' => $id_don]);
+    }
+
+    private function appliquerPrelevement($id_besoin, $id_don, $quantite) {
+        $sqlDispatch = "INSERT INTO bngrc_dispatch (id_besoin, id_don, quantite_attribuee) VALUES (:id_b, :id_d, :q)";
+        $this->conn->prepare($sqlDispatch)->execute([':id_b' => $id_besoin, ':id_d' => $id_don, ':q' => $quantite]);
+
+        $sqlUpBesoin = "UPDATE bngrc_besoins SET quantite_restante = quantite_restante - :q WHERE id_besoin = :id";
+        $this->conn->prepare($sqlUpBesoin)->execute([':q' => $quantite, ':id' => $id_besoin]);
+>>>>>>> edf8ef3d9cb4c152e0196c115b7c9332b89c48cf
     }
 }

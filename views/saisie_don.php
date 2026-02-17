@@ -53,6 +53,12 @@
             </a>
         </div>
     </form>
+
+    <hr style="margin: 30px 0;">
+
+    <form action="index.php?action=reinitialiser" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir tout réinitialiser ?');">
+        <button type="submit" style="background-color: #dc3545;">Réinitialiser le système</button>
+    </form>
 </main>
 
 <script>
