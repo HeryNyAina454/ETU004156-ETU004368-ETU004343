@@ -3,7 +3,6 @@ require_once '../config/database.php';
 
 $action = $_GET['action'] ?? 'dashboard';
 
-// --- GESTION DES ROUTES ---
 switch ($action) {
     case 'dashboard':
         require_once '../controllers/DashboardController.php';
@@ -30,7 +29,6 @@ switch ($action) {
         (new DonController())->save();
         break;
 
-    // --- ROUTES V2 : ACHATS & SIMULATION ---
     case 'liste-besoins-achats':
         require_once '../controllers/AchatController.php';
         (new AchatController())->liste();
@@ -46,7 +44,7 @@ switch ($action) {
         (new AchatController())->valider();
         break;
 
-    // --- ROUTES V2 : CONFIGURATION ---
+ 
     case 'config-frais':
         require_once '../controllers/ConfigController.php';
         (new ConfigController())->index();
@@ -57,10 +55,19 @@ switch ($action) {
         (new ConfigController())->save();
         break;
 
-    // --- ROUTES V2 : RÉCAPITULATIF (AJAX) ---
+  
     case 'recapitulatif':
         require_once '../controllers/DashboardController.php';
         (new DashboardController())->recap();
+        break;
+        case 'delete-besoin':
+    require_once '../controllers/BesoinController.php';
+    (new BesoinController())->delete();
+    break;
+
+    case 'reinitialiser':
+        require_once '../controllers/DonController.php';
+        (new DonController())->reinitialiser();
         break;
 
     default:

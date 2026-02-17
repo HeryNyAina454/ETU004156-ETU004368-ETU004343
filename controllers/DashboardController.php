@@ -3,7 +3,8 @@ class DashboardController {
     public function index() {
         $db = (new Database())->getConnection();
         
-        $query = "SELECT v.nom_ville, b.article, b.quantite_initiale, b.quantite_restante, b.prix_unitaire,
+
+        $query = "SELECT b.id_besoin, v.nom_ville, b.article, b.quantite_initiale, b.quantite_restante, b.prix_unitaire,
                   (SELECT SUM(quantite_attribuee) FROM bngrc_dispatch WHERE id_besoin = b.id_besoin) as total_recu
                   FROM bngrc_villes v
                   LEFT JOIN bngrc_besoins b ON v.id_ville = b.id_ville

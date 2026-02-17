@@ -6,13 +6,13 @@ class AchatController {
     public function liste() {
         $db = (new Database())->getConnection();
         
-        // Récupérer le frais configuré
+        
         $stmt = $db->query("SELECT valeur FROM bngrc_params WHERE cle = 'frais_achat'");
         $frais_achat = $stmt->fetchColumn();
 
         $ville_filtre = $_POST['ville_filtre'] ?? '';
         
-        // CORRECTION : Jointure avec la table villes pour avoir la clé 'ville'
+        
         $sql = "SELECT b.*, v.nom_ville as ville 
                 FROM bngrc_besoins b
                 JOIN bngrc_villes v ON b.id_ville = v.id_ville
@@ -45,12 +45,12 @@ class AchatController {
             exit;
         }
 
-        // Récupérer les détails du besoin
+       
         $stmt = $db->prepare("SELECT * FROM bngrc_besoins WHERE id_besoin = ?");
         $stmt->execute([$id_besoin]);
         $besoin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Récupérer le taux de frais
+        
         $stmtFrais = $db->query("SELECT valeur FROM bngrc_params WHERE cle = 'frais_achat'");
         $frais_taux = $stmtFrais->fetchColumn();
 
@@ -64,7 +64,6 @@ class AchatController {
         $reste_actuel = $besoin['quantite_restante'];
         $reste_apres = $reste_actuel - $qte_simulee;
 
-        // Calculer l'argent disponible (Don d'article 'argent')
         $stmtArgent = $db->prepare("SELECT SUM(quantite_disponible) FROM bngrc_dons WHERE LOWER(TRIM(article)) = 'argent'");
         $stmtArgent->execute();
         $argent_actuel = $stmtArgent->fetchColumn() ?: 0;
@@ -83,12 +82,11 @@ class AchatController {
             die("Données d'achat invalides.");
         }
 
-        // 1. Vérifier le nom de l'article
         $stmt = $db->prepare("SELECT article FROM bngrc_besoins WHERE id_besoin = ?");
         $stmt->execute([$id_besoin]);
         $besoin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // 2. Erreur si l'article est déjà en stock dans les dons (Règle V2)
+       
         $stmt = $db->prepare("SELECT SUM(quantite_disponible) FROM bngrc_dons WHERE LOWER(TRIM(article)) = LOWER(TRIM(?))");
         $stmt->execute([$besoin['article']]);
         $stock_don = $stmt->fetchColumn();
@@ -97,7 +95,7 @@ class AchatController {
             die("Erreur : Impossible d'acheter cet article car il en reste encore dans les dons reçus.");
         }
 
-        // 3. Exécution de la transaction via le modèle Achat
+        
         $achatModel = new Achat($db);
         $resultat = $achatModel->effectuerAchat($id_besoin, $qte_a_acheter);
 

@@ -1,47 +1,49 @@
 <?php include 'common/header.php'; ?>
 
 <main>
-    <h2>Besoins restants et Achats</h2>
+    <div>
+        <h2>Besoins restants et Achats</h2>
 
-    <div class="filter-section">
-        <form action="index.php?action=liste-besoins-achats" method="POST">
-            <label>Filtrer par ville :</label>
-            <input type="text" name="ville_filtre" placeholder="Nom de la ville...">
-            <button type="submit">Filtrer</button>
-        </form>
+        <div class="filter-section">
+            <form action="index.php?action=liste-besoins-achats" method="POST">
+                <label>Filtrer par ville :</label>
+                <input type="text" name="ville_filtre" placeholder="Nom de la ville...">
+                <button type="submit">Filtrer</button>
+            </form>
+        </div>
+
+        <table border="1" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Ville</th>
+                    <th>Article</th>
+                    <th>Reste à combler</th>
+                    <th>Unité</th>
+                    <th>Prix Unitaire (Ar)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($besoins as $b): ?>
+                <tr>
+                    <td><?= $b['ville'] ?></td>
+                    <td><?= $b['article'] ?></td>
+                    <td><?= $b['quantite_restante'] ?></td>
+                    <td><?= $b['unite'] ?></td>
+                    <td><?= number_format($b['prix_unitaire'], 2, ',', ' ') ?></td>
+                    <td>
+                        <button onclick="ouvrirSimulation(
+                            <?= $b['id_besoin'] ?>, 
+                            '<?= $b['article'] ?>', 
+                            <?= $b['quantite_restante'] ?>, 
+                            <?= $b['prix_unitaire'] ?>
+                        )">Acheter / Simuler</button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
-
-    <table border="1" style="width: 100%; margin-top: 20px; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th>Ville</th>
-                <th>Article</th>
-                <th>Reste à combler</th>
-                <th>Unité</th>
-                <th>Prix Unitaire (Ar)</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($besoins as $b): ?>
-            <tr>
-                <td><?= $b['ville'] ?></td>
-                <td><?= $b['article'] ?></td>
-                <td><?= $b['quantite_restante'] ?></td>
-                <td><?= $b['unite'] ?></td>
-                <td><?= number_format($b['prix_unitaire'], 2, ',', ' ') ?></td>
-                <td>
-                    <button onclick="ouvrirSimulation(
-                        <?= $b['id_besoin'] ?>, 
-                        '<?= $b['article'] ?>', 
-                        <?= $b['quantite_restante'] ?>, 
-                        <?= $b['prix_unitaire'] ?>
-                    )">Acheter / Simuler</button>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
 
     <div id="modalSimulation" style="display:none; position:fixed; top:20%; left:30%; background:#fff; padding:20px; border:2px solid #000; z-index:1000;">
         <h3>Simulation d'achat</h3>

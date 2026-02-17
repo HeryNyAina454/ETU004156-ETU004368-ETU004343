@@ -53,3 +53,35 @@ ALTER TABLE bngrc_besoins ADD COLUMN unite VARCHAR(20) NOT NULL AFTER quantite_r
 ALTER TABLE bngrc_dons ADD COLUMN unite VARCHAR(20) NOT NULL AFTER quantite_disponible;
 
 
+###V3
+
+-- Ajouter le type de distribution dans la table dons
+ALTER TABLE bngrc_dons ADD COLUMN type_distribution VARCHAR(20) DEFAULT 'prioritaire';
+
+-- Pour le bouton réinitialiser, on devra vider ces tables dans cet ordre :
+-- DELETE FROM bngrc_achats;
+-- DELETE FROM bngrc_dons;
+-- UPDATE bngrc_besoins SET quantite_restante = quantite_initiale;
+
+
+ALTER TABLE bngrc_dispatch ADD UNIQUE KEY unique_distribution (id_besoin, id_don);
+
+
+-- Désactiver temporairement les contraintes
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Vider les tables dans l'ordre
+TRUNCATE TABLE bngrc_dispatch;
+TRUNCATE TABLE bngrc_dons;
+
+-- AJOUTER LA SÉCURITÉ ANTI-DOUBLON (C'est le moment critique)
+ALTER TABLE bngrc_dispatch ADD UNIQUE KEY unique_distribution (id_besoin, id_don);
+
+-- Réactiver les contraintes
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Remettre les besoins à neuf
+UPDATE bngrc_besoins SET quantite_restante = quantite_initiale;
+
+
+SET FOREIGN_KEY_CHECKS = 0; TRUNCATE TABLE bngrc_dispatch; TRUNCATE TABLE bngrc_dons; SET FOREIGN_KEY_CHECKS = 1;

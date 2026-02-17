@@ -26,4 +26,35 @@ class BesoinController {
 
         header("Location: index.php?action=dashboard");
     }
+
+    public function delete() {
+        if (!isset($_GET['id'])) {
+            header("Location: index.php?action=dashboard");
+            exit();
+        }
+
+        $id = $_GET['id'];
+        $db = (new Database())->getConnection();
+
+        try {
+            $db->beginTransaction();
+            
+            
+            $db->prepare("DELETE FROM bngrc_dispatch WHERE id_besoin = ?")->execute([$id]);
+            
+           
+            $db->prepare("DELETE FROM bngrc_achats WHERE id_besoin = ?")->execute([$id]);
+            
+            
+            $db->prepare("DELETE FROM bngrc_besoins WHERE id_besoin = ?")->execute([$id]);
+
+            $db->commit();
+        } catch (Exception $e) {
+            $db->rollBack();
+            // Optionnel: logger l'erreur $e->getMessage()
+        }
+
+        header("Location: index.php?action=dashboard");
+        exit();
+    }
 }
