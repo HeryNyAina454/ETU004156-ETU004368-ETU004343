@@ -62,6 +62,16 @@ switch ($action) {
         require_once '../controllers/DashboardController.php';
         (new DashboardController())->recap();
         break;
+        case 'delete-besoin':
+    require_once '../controllers/BesoinController.php';
+    (new BesoinController())->delete();
+    break;
+
+    // --- ROUTE V3 : RÉINITIALISATION ---
+    case 'reinitialiser':
+        require_once '../controllers/DonController.php';
+        (new DonController())->reinitialiser();
+        break;
 
     default:
         header("Location: index.php?action=dashboard");
