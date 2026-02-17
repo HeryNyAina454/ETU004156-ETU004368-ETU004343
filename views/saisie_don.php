@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label>Article reçu :</label>
-            <input type="text" name="article" placeholder="ex: Riz, Huile..." required>
+            <input type="text" name="article" placeholder="ex: riz, tole, eau..." required>
         </div>
 
         <div class="form-group" style="display: flex; flex-direction: row; gap: 10px;">
@@ -46,18 +46,12 @@
             </select>
         </div>
 
-        <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <div style="display: flex; gap: 10px; margin-top: 5px;">
             <button type="submit" style="flex: 2;">Valider et Distribuer</button>
             <a href="index.php?action=reinitialiser" onclick="return confirm('Êtes-vous sûr de vouloir tout réinitialiser ?');" style="flex: 1; text-decoration: none;">
                 <button type="button" style="width: 100%; background-color: #dc3545; margin-top: 0;">Réinitialiser</button>
             </a>
         </div>
-    </form>
-
-    <hr style="margin: 30px 0;">
-
-    <form action="index.php?action=reinitialiser" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir tout réinitialiser ?');">
-        <button type="submit" style="background-color: #dc3545;">Réinitialiser le système</button>
     </form>
 </main>
 

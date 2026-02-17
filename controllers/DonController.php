@@ -48,24 +48,4 @@ class DonController {
             die("Erreur reset : " . $e->getMessage());
         }
     }
-
-    public function reinitialiser() {
-        $db = (new Database())->getConnection();
-        
-        try {
-            $db->exec("SET FOREIGN_KEY_CHECKS = 0");
-
-            $db->exec("TRUNCATE TABLE bngrc_dispatch");
-            $db->exec("TRUNCATE TABLE bngrc_achats");
-            $db->exec("TRUNCATE TABLE bngrc_dons");
-            $db->exec("UPDATE bngrc_besoins SET quantite_restante = quantite_initiale");
-
-            $db->exec("SET FOREIGN_KEY_CHECKS = 1");
-
-            header("Location: index.php?action=dashboard");
-            exit();
-        } catch (Exception $e) {
-            die("Erreur reset : " . $e->getMessage());
-        }
-    }
-}
+}   

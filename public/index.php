@@ -24,6 +24,11 @@ switch ($action) {
         (new DonController())->form();
         break;
 
+    case 'get-articles':
+        require_once '../controllers/DonController.php';
+        (new DonController())->getArticles();
+        break;
+
     case 'save-don':
         require_once '../controllers/DonController.php';
         (new DonController())->save();
@@ -44,7 +49,6 @@ switch ($action) {
         (new AchatController())->valider();
         break;
 
- 
     case 'config-frais':
         require_once '../controllers/ConfigController.php';
         (new ConfigController())->index();
@@ -55,15 +59,15 @@ switch ($action) {
         (new ConfigController())->save();
         break;
 
-  
     case 'recapitulatif':
         require_once '../controllers/DashboardController.php';
         (new DashboardController())->recap();
         break;
-        case 'delete-besoin':
-    require_once '../controllers/BesoinController.php';
-    (new BesoinController())->delete();
-    break;
+
+    case 'delete-besoin':
+        require_once '../controllers/BesoinController.php';
+        (new BesoinController())->delete();
+        break;
 
     case 'reinitialiser':
         require_once '../controllers/DonController.php';
