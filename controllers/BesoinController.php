@@ -26,4 +26,35 @@ class BesoinController {
 
         header("Location: index.php?action=dashboard");
     }
+
+    public function delete() {
+        if (!isset($_GET['id'])) {
+            header("Location: index.php?action=dashboard");
+            exit();
+        }
+
+        $id = $_GET['id'];
+        $db = (new Database())->getConnection();
+
+        try {
+            $db->beginTransaction();
+            
+            // Supprimer les liens de distribution (Dons nature)
+            $db->prepare("DELETE FROM bngrc_dispatch WHERE id_besoin = ?")->execute([$id]);
+            
+            // Supprimer les liens d'achats (Dons argent V2)
+            $db->prepare("DELETE FROM bngrc_achats WHERE id_besoin = ?")->execute([$id]);
+            
+            // Supprimer le besoin lui-même
+            $db->prepare("DELETE FROM bngrc_besoins WHERE id_besoin = ?")->execute([$id]);
+
+            $db->commit();
+        } catch (Exception $e) {
+            $db->rollBack();
+            // Optionnel: logger l'erreur $e->getMessage()
+        }
+
+        header("Location: index.php?action=dashboard");
+        exit();
+    }
 }
